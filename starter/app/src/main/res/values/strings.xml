@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">ShoeStore</string>
+    <string name="shoe_store_name">Antique Shoe Store</string>
+    <string name="username_text">Username</string>
+    <string name="username_hint">BigPoppa</string>
+    <string name="example_email">bigpoppa@gmail.com</string>
+    <string name="password_text">Password</string>
+    <string name="email_text">Email</string>
+    <string name="password_hint">******</string>
+    <string name="register_text">Register</string>
+    <string name="login_to_existing_account_text">Login to Existing Account</string>
+    <string name="example_username">Example_Username</string>
+    <string name="example_email_text">example_email@gmail.com</string>
+    <string name="example_password">password</string>
+    <string name="logging_you_in_text">Logging you in…</string>
+    <string name="login_complete_text">Login complete!</string>
+    <string name="welcome_text">Welcome!</string>
+    <string name="welcome_bottom_text">Thank you for signing up, we regularly post new additions! Feel free to inquire about anything you see!</string>
+    <string name="next_text">Next</string>
 </resources>
