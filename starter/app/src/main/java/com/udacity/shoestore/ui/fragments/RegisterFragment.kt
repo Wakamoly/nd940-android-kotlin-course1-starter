@@ -15,7 +15,9 @@ import com.udacity.shoestore.db.ShoeStoreDatabase
 import com.udacity.shoestore.db.dao.ShoeDao
 import com.udacity.shoestore.db.dao.UserDao
 import com.udacity.shoestore.repositories.RegisterRepository
+import com.udacity.shoestore.ui.activities.MainActivity
 import com.udacity.shoestore.ui.fragments.view_models.RegisterViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding, RegisterRepository>() {
 
@@ -27,7 +29,6 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
         mCtx = requireContext()
         userDao = ShoeStoreDatabase.invoke(mCtx).getUserDao()
         shoeDao = ShoeStoreDatabase.invoke(mCtx).getShoeDao()
-        requireActivity().actionBar?.hide()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

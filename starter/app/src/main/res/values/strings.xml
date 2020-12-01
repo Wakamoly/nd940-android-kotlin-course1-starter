@@ -17,4 +17,8 @@
     <string name="welcome_text">Welcome!</string>
     <string name="welcome_bottom_text">Thank you for signing up, we regularly post new additions! Feel free to inquire about anything you see!</string>
     <string name="next_text">Next</string>
+    <string name="logout_text">Logout</string>
+    <string name="shoe_list_text">Shoe List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

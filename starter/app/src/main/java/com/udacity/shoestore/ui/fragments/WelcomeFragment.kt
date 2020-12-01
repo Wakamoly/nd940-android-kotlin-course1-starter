@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentWelcomeBinding
+import com.udacity.shoestore.ui.activities.MainActivity
 
 class WelcomeFragment : Fragment() {
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().actionBar?.hide()
-    }*/
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,6 +23,12 @@ class WelcomeFragment : Fragment() {
                 container,
                 false
         )
+
+        binding.button.setOnClickListener {
+            // TODO: 11/30/20 Make this nav to instructions frag
+            requireView().findNavController().navigate(WelcomeFragmentDirections.actionWelcomeDestinationToShoeListFragment())
+        }
+
         return binding.root
     }
 

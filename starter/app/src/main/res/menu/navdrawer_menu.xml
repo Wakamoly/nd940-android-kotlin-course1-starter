@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listFragment"
+        android:icon="@drawable/ic_baseline_align_horizontal_left_24"
+        android:title="@string/shoe_list_text" />
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="@string/logout_text" />
+
+</menu>
