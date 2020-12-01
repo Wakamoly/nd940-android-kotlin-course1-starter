@@ -75,7 +75,7 @@ class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding
             descriptionText.text = entity.description
             viewPager.adapter = ViewPagerAdapter(mCtx, entity.images)
 
-            // TODO: 11/30/20 Set onClickListener for "layout" 
+            // TODO: 11/30/20 Set onClickListener for "layout"
             binding.scrollLinearLayout.addView(subViewInflater)
         }
     }
