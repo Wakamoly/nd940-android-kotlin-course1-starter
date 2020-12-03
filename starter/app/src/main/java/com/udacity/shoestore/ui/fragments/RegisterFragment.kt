@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.udacity.shoestore.*
@@ -103,7 +104,12 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentRegisterBinding.inflate(inflater, container, false)
+    ) : FragmentRegisterBinding = DataBindingUtil.inflate(
+        inflater,
+        R.layout.fragment_register,
+        container,
+        false
+    )
 
     override fun getFragmentRepository() = RegisterRepository(userPreferences, userDao, shoeDao)
 

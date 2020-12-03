@@ -21,4 +21,7 @@
     <string name="shoe_list_text">Shoe List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shoe_listings_text">Shoe Listings</string>
+    <string name="instruction_text_1">Tap here to add a new shoe listing!</string>
+    <string name="instruction_text_2">(For now, it\'ll take you to the shoe listings)</string>
 </resources>

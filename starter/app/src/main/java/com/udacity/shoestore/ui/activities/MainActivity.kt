@@ -40,16 +40,15 @@ class MainActivity : AppCompatActivity() {
         toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         drawerLayout = binding.drawerLayout
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        // prevent nav gesture if not on start destination
+        // prevent nav gesture and hide appBar if on starting destinations
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
-            if (nd.id != R.id.register_destination || nd.id != R.id.welcome_destination) {
+            if (nd.id != R.id.register_destination && nd.id != R.id.welcome_destination && nd.id != R.id.instruction_destination) {
                 unhideAppBar()
             } else {
                 hideAppBar()

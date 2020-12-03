@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.udacity.shoestore.Resource
 import com.udacity.shoestore.base.BaseViewModel
+import com.udacity.shoestore.db.ShoeStoreDatabase
 import com.udacity.shoestore.db.entities.ShoeEntity
 import com.udacity.shoestore.repositories.ShoeListRepository
 import kotlinx.coroutines.launch
@@ -20,6 +21,15 @@ class ShoeListViewModel (
     fun getShoes() = viewModelScope.launch {
         _shoes.value = Resource.Loading
         _shoes.value = repository.getShoes()
+    }
+
+    fun saveShoe(shoeEntity: ShoeEntity) = viewModelScope.launch {
+        _shoes.value = Resource.Loading
+        if (repository.saveShoe(shoeEntity) is Resource.Success){
+            _shoes.value = repository.getShoes()
+        }else{
+            _shoes.value = Resource.Failure(false, null, null)
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.udacity.shoestore.ui.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -25,13 +26,10 @@ class WelcomeFragment : Fragment() {
         )
 
         binding.button.setOnClickListener {
-            // TODO: 11/30/20 Make this nav to instructions frag
-            requireView().findNavController().navigate(WelcomeFragmentDirections.actionWelcomeDestinationToShoeListFragment())
+            requireView().findNavController().navigate(WelcomeFragmentDirections.actionWelcomeDestinationToInstructionFragment())
         }
 
         return binding.root
     }
-
-
 
 }

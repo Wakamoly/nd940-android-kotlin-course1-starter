@@ -80,7 +80,7 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    //Glide for image loading
+    //Glide for image loading, the only reason internet permissions have been made in the manifest
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
 }

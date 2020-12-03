@@ -11,4 +11,6 @@ class ShoeListRepository (
 
     suspend fun getShoes() : Resource<List<ShoeEntity>> = safeApiCall { shoeDao.get() }
 
+    suspend fun saveShoe(shoeEntity: ShoeEntity) = safeApiCall { shoeDao.insert(shoeEntity) }
+
 }
