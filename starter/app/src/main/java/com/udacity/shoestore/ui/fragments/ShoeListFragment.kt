@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -76,6 +78,9 @@ class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.shoe_listings_text)
         subscribeObservers()
         initRecycler()
+        binding.addShoeButton.setOnClickListener {
+            findNavController().navigate(ShoeListFragmentDirections.actionShoelistDestinationToShoeDetailFragment())
+        }
     }
 
     private fun subscribeObservers(){
@@ -109,9 +114,19 @@ class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding
             shoeBinding.shoeCompany.text = shoeCompanyText
             shoeBinding.sliderDots.setupWithViewPager(shoeBinding.shoeImageViewpager, true)
             shoeBinding.descriptionTv.text = entity.description
-            shoeBinding.shoeImageViewpager.adapter = ViewPagerAdapter(mCtx, entity.images)
 
-            // TODO: 11/30/20 Set onClickListener for "layout"
+            if (entity.images.isEmpty()){
+                shoeBinding.shoeImageViewpager.visible(false)
+                shoeBinding.sliderDots.visible(false)
+            }else {
+                shoeBinding.shoeImageViewpager.visible(true)
+                shoeBinding.sliderDots.visible(true)
+                shoeBinding.shoeImageViewpager.adapter = ViewPagerAdapter(mCtx, entity.images)
+            }
+
+            shoeBinding.shoeListLayout.setOnClickListener {
+                requireView().findNavController().navigate(ShoeListFragmentDirections.actionShoelistDestinationToShoeDetailFragment(entity))
+            }
             binding.scrollLinearLayout.addView(shoeBinding.root)
         }
     }

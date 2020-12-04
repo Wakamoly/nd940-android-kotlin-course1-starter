@@ -24,4 +24,16 @@
     <string name="shoe_listings_text">Shoe Listings</string>
     <string name="instruction_text_1">Tap here to add a new shoe listing!</string>
     <string name="instruction_text_2">(For now, it\'ll take you to the shoe listings)</string>
+    <string name="shoe_details_text">Shoe Details</string>
+    <string name="add_shoe_text">Add New Shoe</string>
+    <string name="viewpager_imageview_contentdescription">Image in viewpager, can scroll left or right</string>
+    <string name="shoe_title_text">Shoe Title</string>
+    <string name="shoe_size_text">Shoe Size</string>
+    <string name="shoe_company_text">Shoe Company</string>
+    <string name="shoe_description_text">Shoe Description</string>
+    <string name="image_url_1_text">Image URL #1</string>
+    <string name="image_url_2_text">Image URL #2</string>
+    <string name="image_url_3_text">Image URL #3</string>
+    <string name="save_shoe_details_text">Save Shoe Details</string>
+    <string name="cancel_text">Cancel</string>
 </resources>
