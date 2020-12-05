@@ -12,7 +12,7 @@ data class ShoeEntity(
     var size: Double,
     var company: String,
     var description: String,
-    val images: List<String> = mutableListOf()
+    var images: List<String> = mutableListOf()
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 }

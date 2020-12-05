@@ -36,4 +36,5 @@
     <string name="image_url_3_text">Image URL #3</string>
     <string name="save_shoe_details_text">Save Shoe Details</string>
     <string name="cancel_text">Cancel</string>
+    <string name="example_image_url_text">https:// ..... .jpg</string>
 </resources>

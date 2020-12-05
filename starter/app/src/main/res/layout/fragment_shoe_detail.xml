@@ -13,6 +13,10 @@
         <variable
             name="viewmodel"
             type="com.udacity.shoestore.ui.fragments.view_models.ShoeListViewModel" />
+
+        <variable
+            name="entity"
+            type="com.udacity.shoestore.db.entities.ShoeEntity" />
     </data>
 
     <!-- Using ScrollView to allow the screen to show the lower EditTexts while editing,
@@ -22,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        tools:background="#111111">
+        tools:background="@color/background_color">
 
         <!-- Using ConstraintLayout as our EditTexts will scale dynamically to content inside them,
          and I've chained the Shoe Size and Shoe Company views -->
@@ -67,6 +71,7 @@
                 android:inputType="textMultiLine|textCapWords"
                 android:maxLines="3"
                 android:minLines="1"
+                android:text="@={entity.name}"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +101,7 @@
                 android:inputType="numberDecimal"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
+                android:text="@={`` + entity.size}"
                 app:layout_constraintEnd_toStartOf="@+id/company_edit_text"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +131,7 @@
                 android:backgroundTint="@color/darkGray"
                 android:gravity="center"
                 android:hint="Company"
+                android:text="@={entity.company}"
                 android:inputType="textShortMessage|textCapSentences"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -158,6 +165,7 @@
                 android:inputType="textLongMessage|textMultiLine|textCapSentences"
                 android:maxLines="10"
                 android:minLines="5"
+                android:text="@={entity.description}"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="16sp"
@@ -187,10 +195,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/darkGray"
-                android:hint="https:// ..... .jpg"
+                android:hint="@string/example_image_url_text"
                 android:inputType="textUri"
                 android:textColor="@android:color/holo_blue_bright"
                 android:textColorHint="@android:color/darker_gray"
+                android:text="@={entity.images[0]}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -216,7 +225,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/darkGray"
-                android:hint="https:// ..... .jpg"
+                android:hint="@string/example_image_url_text"
+                android:text="@={entity.images[1]}"
                 android:inputType="textUri"
                 android:textColor="@android:color/holo_blue_bright"
                 android:textColorHint="@android:color/darker_gray"
@@ -245,7 +255,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/darkGray"
-                android:hint="https:// ..... .jpg"
+                android:hint="@string/example_image_url_text"
+                android:text="@={entity.images[2]}"
                 android:inputType="textUri"
                 android:textColor="@android:color/holo_blue_bright"
                 android:textColorHint="@android:color/darker_gray"
@@ -262,7 +273,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="24dp"
-                android:onClick="@{(view) -> fragment.saveShoe()}"
+                android:onClick="@{(view) -> fragment.saveShoe(entity)}"
                 app:layout_constraintTop_toBottomOf="@id/url_et_3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

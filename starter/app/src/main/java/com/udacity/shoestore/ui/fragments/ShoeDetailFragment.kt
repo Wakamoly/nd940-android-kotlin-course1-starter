@@ -52,61 +52,30 @@ class ShoeDetailFragment : BaseFragment<ShoeListViewModel, FragmentShoeDetailBin
              * Shoe listing clicked, editing existing
              */
             shoeEntity = args.shoeEntity!!
+            binding.entity = shoeEntity
             Timber.d(shoeEntity.id.toString())
-
-            binding.titleEditText.setText(shoeEntity.name)
-            binding.shoeSizeEditText.setText(shoeEntity.size.toString())
-            binding.companyEditText.setText(shoeEntity.company)
-            binding.descriptionEditText.setText(shoeEntity.description)
-
-            when(shoeEntity.images.size){
-                3 -> {
-                    binding.urlEt1.setText(shoeEntity.images[0])
-                    binding.urlEt2.setText(shoeEntity.images[1])
-                    binding.urlEt3.setText(shoeEntity.images[2])
-                }
-                2 -> {
-                    binding.urlEt1.setText(shoeEntity.images[0])
-                    binding.urlEt2.setText(shoeEntity.images[1])
-                }
-                1 -> binding.urlEt1.setText(shoeEntity.images[0])
-            }
         }else{
             /**
              * Floating button to add new shoe pressed, not editing a existing listing
              */
             Timber.d("ShoeEntity null!")
             (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.add_shoe_text)
+            binding.entity = ShoeEntity("",0.0,"","", emptyList())
         }
     }
 
-    fun saveShoe(){
-        if (binding.shoeSizeEditText.text.toString().toDoubleOrNull() != null){
-            val shoeSize = binding.shoeSizeEditText.text.toString().toDouble()
-            val title = binding.titleEditText.text.toString()
-            val shoeCompany = binding.companyEditText.text.toString()
-            val shoeDescription = binding.descriptionEditText.text.toString()
-            val imageUrl1 = binding.urlEt1.text.toString()
-            val imageUrl2 = binding.urlEt2.text.toString()
-            val imageUrl3 = binding.urlEt3.text.toString()
-            val imageList: MutableList<String> = ArrayList()
-            if (imageUrl1.isNotEmpty()){
-                imageList.add(imageUrl1)
+    fun saveShoe(newShoeEntity: ShoeEntity){
+        val imageList: MutableList<String> = ArrayList()
+        for (imageURL in newShoeEntity.images){
+            if (imageURL.isNotEmpty()){
+                imageList.add(imageURL)
             }
-            if (imageUrl2.isNotEmpty()){
-                imageList.add(imageUrl2)
-            }
-            if (imageUrl3.isNotEmpty()){
-                imageList.add(imageUrl3)
-            }
-            val newShoeEntity = ShoeEntity(title,shoeSize,shoeCompany,shoeDescription,imageList)
-            if (::shoeEntity.isInitialized){
-                shoeViewModel.updateShoe(newShoeEntity, shoeEntity.id)
-            }else{
-                shoeViewModel.saveShoe(newShoeEntity)
-            }
+        }
+        newShoeEntity.images = imageList
+        if (::shoeEntity.isInitialized){
+            shoeViewModel.updateShoe(newShoeEntity, shoeEntity.id)
         }else{
-            requireView().snackbar("Shoe Size must be in Double format! (Ex. \"9.5\")")
+            shoeViewModel.saveShoe(newShoeEntity)
         }
     }
 

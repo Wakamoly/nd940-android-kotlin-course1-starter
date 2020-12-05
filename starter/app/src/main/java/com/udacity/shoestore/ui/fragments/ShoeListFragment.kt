@@ -1,10 +1,9 @@
 package com.udacity.shoestore.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.udacity.shoestore.R
-import com.udacity.shoestore.Resource
+import com.udacity.shoestore.*
 import com.udacity.shoestore.base.BaseFragment
 import com.udacity.shoestore.base.ViewModelFactory
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
@@ -27,12 +25,14 @@ import com.udacity.shoestore.databinding.RecyclerShoesBinding
 import com.udacity.shoestore.db.ShoeStoreDatabase
 import com.udacity.shoestore.db.dao.ShoeDao
 import com.udacity.shoestore.db.entities.ShoeEntity
-import com.udacity.shoestore.handleApiError
 import com.udacity.shoestore.repositories.ShoeListRepository
+import com.udacity.shoestore.ui.activities.MainActivity
 import com.udacity.shoestore.ui.adapters.ShoeListAdapter
 import com.udacity.shoestore.ui.adapters.ViewPagerAdapter
 import com.udacity.shoestore.ui.fragments.view_models.ShoeListViewModel
-import com.udacity.shoestore.visible
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 
 class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding, ShoeListRepository>() {
@@ -70,6 +70,7 @@ class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding
         if (container != null) {
             containerSL = container
         }
+        setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -137,6 +138,30 @@ class ShoeListFragment : BaseFragment<ShoeListViewModel, FragmentShoeListBinding
         shoeListAdapter = ShoeListAdapter(mCtx)
         binding.shoeListRecycler.adapter = shoeListAdapter*/
         shoeViewModel.getShoes()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.navdrawer_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout->{
+                CoroutineScope(Dispatchers.IO).launch {
+                    UserPreferences(mCtx).clear()
+                    ShoeStoreDatabase(mCtx).clearAllTables()
+                }
+                val intent = Intent(activity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                (requireActivity() as AppCompatActivity).finish()
+                startActivity(intent)
+            }
+            R.id.listFragment->{
+                findNavController().navigate(R.id.shoelist_destination)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun getViewModel() = ShoeListViewModel::class.java

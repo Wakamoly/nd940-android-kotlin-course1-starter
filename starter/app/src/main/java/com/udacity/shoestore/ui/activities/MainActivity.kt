@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import com.udacity.shoestore.R
 import com.udacity.shoestore.UserPreferences
 import com.udacity.shoestore.databinding.ActivityMainBinding
@@ -41,7 +45,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         drawerLayout = binding.drawerLayout
 
-        navController = this.findNavController(R.id.nav_host_fragment)
+        val navHost: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
+        navController = navHost.navController
+
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
@@ -58,8 +65,31 @@ class MainActivity : AppCompatActivity() {
         Timber.plant(Timber.DebugTree())
         val userLoggedIn = runBlocking { UserPreferences(this@MainActivity).isUserLoggedIn() }
         if (!userLoggedIn){
-            navController.navigate(R.id.register_destination)
-            hideAppBar()
+            navController.graph = navController.graph.apply {
+                startDestination = R.id.register_destination
+            }
+        }
+        binding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.logout->{
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        UserPreferences(this@MainActivity).clear()
+                        ShoeStoreDatabase(this@MainActivity).clearAllTables()
+                    }
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    finish()
+                    startActivity(intent)
+                    true
+                }
+                R.id.listFragment->{
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    this.findNavController(R.id.nav_host_fragment).navigate(R.id.shoelist_destination)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -76,30 +106,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.navdrawer_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.logout->{
-                CoroutineScope(Dispatchers.IO).launch {
-                    UserPreferences(this@MainActivity).clear()
-                    ShoeStoreDatabase(this@MainActivity).clearAllTables()
-                }
-                val intent =  Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
-            R.id.listFragment->{
-                navController.navigate(R.id.shoelist_destination)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 

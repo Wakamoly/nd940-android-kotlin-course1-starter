@@ -21,12 +21,7 @@ class InstructionFragment : Fragment() {
     ): View {
         (activity as AppCompatActivity).supportActionBar?.hide()
         // Inflate view and obtain an instance of the binding class.
-        val binding: FragmentInstructionBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_instruction,
-            container,
-            false
-        )
+        val binding = FragmentInstructionBinding.inflate(inflater,container,false)
 
         binding.addShoeButton.setOnClickListener {
             requireView().findNavController().navigate(InstructionFragmentDirections.actionInstructionFragmentToShoelistDestination())
