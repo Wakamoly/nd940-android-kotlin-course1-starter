@@ -1,6 +1,6 @@
 # ShoeStore
 
-ShoeStore project requirement for [Android App Development in Kotlin course on Udacity](https://www.udacity.com/course/developing-android-apps-with-kotlin--ud9012)
+ShoeStore project requirement for [Android Kotlin Developer Nanodegree on Udacity](https://www.udacity.com/course/android-kotlin-developer-nanodegree--nd940)
 
 ### Dependencies
 
